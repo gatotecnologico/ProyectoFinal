@@ -47,3 +47,16 @@ router.put('/', async (req:Request, res:Response) => {
         res.status(400).send("Error en los datos")
     }
 })
+
+//http://localhost:3001/api/registro/
+router.delete('/', async (req:Request, res:Response) => {
+    try {
+        const {id} = req.body
+        const eliminado = await registroServices.borrarRegistro(Number(id))
+        res.send(eliminado)
+    } catch (error) {
+        res.status(400).send("Error en los datos")
+    }
+})
+
+export default router
