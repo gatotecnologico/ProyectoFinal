@@ -23,6 +23,7 @@ export const encuentraRegistro = async (id:number) => {
 export const agregarRegistro = async (nuevo:RegistroNuevo) => {
     try {
         const validacion = registroSchema.safeParse({
+            id_personal: nuevo.id_personal,
             fecha: nuevo.fecha,
             hora: nuevo.hora,
             movimiento: nuevo.movimiento
@@ -30,8 +31,8 @@ export const agregarRegistro = async (nuevo:RegistroNuevo) => {
         if (!validacion.success) {
             return {error: validacion.error}
         }
-        const [results] = await conexion.query('INSERT INTO registro(fecha, hora, movimiento) VALUES(?, ?, ?)', 
-            [nuevo.fecha, nuevo.hora, nuevo.movimiento])
+        const [results] = await conexion.query('INSERT INTO registro(`id personal`,fecha, hora, movimiento) VALUES(?, ?, ?, ?)', 
+            [nuevo.id_personal, nuevo.fecha, nuevo.hora, nuevo.movimiento])
         return results
     } catch (error) {
         console.log(error)
@@ -39,24 +40,24 @@ export const agregarRegistro = async (nuevo:RegistroNuevo) => {
     }
 }
 
-// export const modificarRegistro = async (modificado:Registro) => {
-//     try {
-//         const validacion = registroSchema.safeParse({
-//             id_personal: modificado.id_personal,
-//             fecha: modificado.fecha,
-//             hora: modificado.hora,
-//             movimiento: modificado.movimiento
-//         })
-//         if (!validacion.success) {
-//             return {error: validacion.error}
-//         }
-//         const [results] = await conexion.query('UPDATE registro SET `id personal` = ?, fecha = ?, hora = ?, movimiento = ? WHERE id = ?', 
-//             [modificado.fecha, modificado.hora, modificado.movimiento, modificado.id_personal])
-//         return results
-//     } catch (error) {
-//         return {error: `No se puede modificar el registro ${modificado.id}`}
-//     }
-// }
+export const modificarRegistro = async (modificado:Registro) => {
+    try {
+        const validacion = registroSchema.safeParse({
+            id_personal: modificado.id_personal,
+            fecha: modificado.fecha,
+            hora: modificado.hora,
+            movimiento: modificado.movimiento
+        })
+        if (!validacion.success) {
+            return {error: validacion.error}
+        }
+        const [results] = await conexion.query('UPDATE registro SET `id personal` = ?, fecha = ?, hora = ?, movimiento = ? WHERE id = ?', 
+            [modificado.id_personal, modificado.fecha, modificado.hora, modificado.movimiento, modificado.id])
+        return results
+    } catch (error) {
+        return {error: `No se puede modificar el registro ${modificado.id}`}
+    }
+}
 
 export const borrarRegistro = async (id:number) => {
     try {

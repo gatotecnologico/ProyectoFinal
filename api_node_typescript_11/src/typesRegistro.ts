@@ -1,4 +1,5 @@
 export interface Registro {
+    id: number,
     id_personal: number,
     fecha: string,
     hora: string,
