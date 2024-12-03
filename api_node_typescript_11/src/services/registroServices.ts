@@ -24,7 +24,7 @@ export const agregarRegistro = async (nuevo:RegistroNuevo) => {
     try {
         const validacion = registroSchema.safeParse({
             id_personal: nuevo.id_personal,
-            fecha: nuevo.fecha,
+            fecha: new Date(nuevo.fecha),
             hora: nuevo.hora,
             movimiento: nuevo.movimiento
         })
@@ -44,7 +44,7 @@ export const modificarRegistro = async (modificado:Registro) => {
     try {
         const validacion = registroSchema.safeParse({
             id_personal: modificado.id_personal,
-            fecha: modificado.fecha,
+            fecha: new Date(modificado.fecha),
             hora: modificado.hora,
             movimiento: modificado.movimiento
         })
