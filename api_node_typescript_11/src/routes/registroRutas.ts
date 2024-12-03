@@ -30,3 +30,20 @@ router.post('/', async (req:Request, res:Response) => {
         res.status(400).send('Error en los datos')
     }
 })
+
+//http://localhost:3001/api/registro/id/
+router.put('/', async (req:Request, res:Response) => {
+    try {
+        const {id, id_personal, fecha, hora, movimiento} = req.body
+        const modificado = await registroServices.modificarRegistro({
+            id,
+            id_personal,
+            fecha,
+            hora,
+            movimiento
+        })
+        res.send(modificado)
+    } catch (error) {
+        res.status(400).send("Error en los datos")
+    }
+})
