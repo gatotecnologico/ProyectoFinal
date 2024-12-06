@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg bg-white">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Tienda</a>
+            <a class="navbar-brand text-primary tienda" href="#">Tienda</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon bg-white"></span>
             </button>
@@ -39,5 +39,9 @@
     nav {
         border: 1px solid #0D6EFD;
         border-radius: 5px;
+    }
+
+    .tienda {
+        font-weight: 600;
     }
 </style>

@@ -38,6 +38,7 @@ export const agregarPersonal = async (nuevo:PersonalNuevo) => {
             estatus: Number(nuevo.estatus)
         })
         if (!validacion.success) {
+            
             return {error: validacion.error}
         }
         const [results] = await conexion.query('INSERT INTO personal(nombre, direccion, telefono, estatus) VALUES(?, ?, ?, ?)', [nuevo.nombre, nuevo.direccion, nuevo.telefono, Number(nuevo.estatus)])
