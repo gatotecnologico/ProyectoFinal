@@ -23,8 +23,8 @@ CREATE TABLE `articulos` (
     SET
         utf8 COLLATE utf8_general_ci NOT NULL,
         `precio` int(11) NOT NULL,
-        `cantidad en almacen` int(11) NOT NULL,
-        `fecha de caducidad` date NOT NULL
+        `cantidadEnAlmacen` int(11) NOT NULL,
+        `fechaCaducidad` date NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
@@ -35,8 +35,8 @@ INSERT INTO
         `id`,
         `descripcion`,
         `precio`,
-        `cantidad en almacen`,
-        `fecha de caducidad`
+        `cantidadEnAlmacen`,
+        `fechaCaducidad`
     )
 VALUES
     (1, 'Papas', 54, 40, '2024-12-11'),
@@ -100,13 +100,13 @@ VALUES
 --
 CREATE TABLE `compras` (
     `id` int(11) NOT NULL,
-    `id articulo` int(11) NOT NULL,
+    `idArticulo` int(11) NOT NULL,
     `cantidad` int(11) NOT NULL,
     `precio` int(11) NOT NULL,
     `IVA` decimal(4, 2) NOT NULL,
     `subtotal` int(11) NOT NULL,
     `total` double NOT NULL,
-    `fecha de compra` date NOT NULL
+    `fechaCompra` date NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
@@ -115,13 +115,13 @@ CREATE TABLE `compras` (
 INSERT INTO
     `compras` (
         `id`,
-        `id articulo`,
+        `idArticulo`,
         `cantidad`,
         `precio`,
         `IVA`,
         `subtotal`,
         `total`,
-        `fecha de compra`
+        `fechaCompra`
     )
 VALUES
     (1, 2, 2, 60, 0.16, 120, 139.2, '2024-01-03'),
@@ -176,7 +176,7 @@ VALUES
 --
 CREATE TABLE `registro` (
     `id` int(11) NOT NULL,
-    `id personal` int(11) NOT NULL,
+    `idPersonal` int(11) NOT NULL,
     `fecha` date NOT NULL,
     `hora` time NOT NULL,
     `movimiento` varchar(7) NOT NULL
@@ -188,14 +188,14 @@ CREATE TABLE `registro` (
 --
 CREATE TABLE `ventas` (
     `id` int(11) NOT NULL,
-    `id articulo` int(11) NOT NULL,
-    `id cliente` int(11) NOT NULL,
+    `idArticulo` int(11) NOT NULL,
+    `idCliente` int(11) NOT NULL,
     `cantidad` int(11) NOT NULL,
     `precio` int(11) NOT NULL,
     `IVA` decimal(4, 2) NOT NULL,
     `subtotal` int(11) NOT NULL,
     `total` double NOT NULL,
-    `fecha de la venta` date NOT NULL
+    `fechaVenta` date NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
 
 --
@@ -204,14 +204,14 @@ CREATE TABLE `ventas` (
 INSERT INTO
     `ventas` (
         `id`,
-        `id articulo`,
-        `id cliente`,
+        `idArticulo`,
+        `idCliente`,
         `cantidad`,
         `precio`,
         `IVA`,
         `subtotal`,
         `total`,
-        `fecha de la venta`
+        `fechaVenta`
     )
 VALUES
     (1, 2, 1, 2, 54, 0.16, 108, 125.28, '2024-01-10'),
@@ -234,7 +234,7 @@ ALTER TABLE `clientes` ADD PRIMARY KEY (`id`);
 -- Indices de la tabla `compras`
 --
 ALTER TABLE `compras` ADD PRIMARY KEY (`id`),
-ADD KEY `fk_articulo_compras` (`id articulo`);
+ADD KEY `fk_articulo_compras` (`idArticulo`);
 
 --
 -- Indices de la tabla `personal`
@@ -245,14 +245,14 @@ ALTER TABLE `personal` ADD PRIMARY KEY (`id`);
 -- Indices de la tabla `registro`
 --
 ALTER TABLE `registro` ADD PRIMARY KEY (`id`),
-ADD KEY `fk_personal_registro` (`id personal`);
+ADD KEY `fk_personal_registro` (`idPersonal`);
 
 --
 -- Indices de la tabla `ventas`
 --
 ALTER TABLE `ventas` ADD PRIMARY KEY (`id`),
-ADD KEY `fk_cliente_ventas` (`id cliente`),
-ADD KEY `fk_articulo_ventas` (`id articulo`);
+ADD KEY `fk_cliente_ventas` (`idCliente`),
+ADD KEY `fk_articulo_ventas` (`idArticulo`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -298,18 +298,18 @@ AUTO_INCREMENT = 5;
 --
 -- Filtros para la tabla `compras`
 --
-ALTER TABLE `compras` ADD CONSTRAINT `fk_articulo_compras` FOREIGN KEY (`id articulo`) REFERENCES `articulos` (`id`);
+ALTER TABLE `compras` ADD CONSTRAINT `fk_articulo_compras` FOREIGN KEY (`idArticulo`) REFERENCES `articulos` (`id`);
 
 --
 -- Filtros para la tabla `registro`
 --
-ALTER TABLE `registro` ADD CONSTRAINT `fk_personal_registro` FOREIGN KEY (`id personal`) REFERENCES `personal` (`id`);
+ALTER TABLE `registro` ADD CONSTRAINT `fk_personal_registro` FOREIGN KEY (`idPersonal`) REFERENCES `personal` (`id`);
 
 --
 -- Filtros para la tabla `ventas`
 --
-ALTER TABLE `ventas` ADD CONSTRAINT `fk_articulo_ventas` FOREIGN KEY (`id articulo`) REFERENCES `articulos` (`id`),
-ADD CONSTRAINT `fk_cliente_ventas` FOREIGN KEY (`id cliente`) REFERENCES `clientes` (`id`);
+ALTER TABLE `ventas` ADD CONSTRAINT `fk_articulo_ventas` FOREIGN KEY (`idArticulo`) REFERENCES `articulos` (`id`),
+ADD CONSTRAINT `fk_cliente_ventas` FOREIGN KEY (`idCliente`) REFERENCES `clientes` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
