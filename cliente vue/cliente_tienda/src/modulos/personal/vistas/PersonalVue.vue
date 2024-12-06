@@ -5,7 +5,7 @@
         <div>
             <RouterLink :to="{path: '/personal/agregar'}">
                 <button class="btn btn-sm btn-outline-primary">
-                    Agregar <i class="fa fa-plus"></i>
+                    Agregar Personal  <i class="fa fa-plus"></i>
                 </button>
             </RouterLink>
         </div>
@@ -25,12 +25,12 @@
                 <td class="text-primary">Sin personal registrado</td>
             </tr>
             <tr v-for="(persona, index) in personal" :key="index">
-                <td class="text-primary">{{ persona.id }}</td>
+                <td class="text-primary id"><h2>{{ persona.id }}</h2></td>
                 <td class="text-primary">{{ persona.nombre }}</td>
-                <td class="text-primary">{{ persona.direccion }}</td>
+                <td class="text-primary">{{ persona.direccion }}</td>     
                 <td class="text-primary">{{ persona.telefono }}</td>
-                <td class="text-primary">{{ persona.estatus }}</td>
-                <td class="centrado">
+                <td class="text-primary estatus"><h2>{{ persona.estatus }}</h2></td>
+                <td classname="dsato" class="centrado">
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         <button type="button" class="btn btn-sm btn-outline-primary">
                             <RouterLink class="nav-link item" :to="{path: '/personal/'+persona.id+'/editar'}">
@@ -66,7 +66,15 @@
         justify-content: space-around;
         margin-top: 20px;
     }
+
+    .id h2, .estatus h2 {
+        font-weight: 400;
+        font-size: 1em;
+        margin-left: 1em
+    }
+
     .centrado {
         text-align: center;
+        border-top: 1px solid #0D6EFD;
     }
 </style>
