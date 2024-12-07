@@ -1,7 +1,7 @@
 import ClientesVue from "@/modulos/clientes/vistas/ClientesVue.vue";
 import ClientesAgregarVue from "@/modulos/clientes/vistas/ClientesAgregarVue.vue";
 import ClientesEditarVue from "@/modulos/clientes/vistas/ClientesEditarVue.vue";
-
+import ClientesBorrarVue from "@/modulos/clientes/vistas/ClientesBorrarVue.vue";
 import ArticulosVue from "@/modulos/articulos/vistas/ArticulosVue.vue";
 import ArticulosAgregarVue from "@/modulos/articulos/vistas/ArticulosAgregarVue.vue";
 import ArticulosEditarVue from "@/modulos/articulos/vistas/ArticulosEditarVue.vue";
@@ -38,6 +38,11 @@ const router = createRouter({
       path: "/clientes/:id/editar",
       name: "clienteseditar",
       component: ClientesEditarVue,
+    },
+    {
+      path: "/clientes/:id/borrar",
+      name: "clientesborrar",
+      component: ClientesBorrarVue,
     },
     {
       path: "/articulos",
