@@ -1,5 +1,6 @@
 import ArticulosVue from "@/modulos/articulos/vistas/ArticulosVue.vue";
 import ArticulosAgregarVue from "@/modulos/articulos/vistas/ArticulosAgregarVue.vue";
+import ArticulosBorrarVue from "@/modulos/articulos/vistas/ArticulosBorrarVue.vue";
 import PersonalAgregarVue from "@/modulos/personal/vistas/PersonalAgregarVue.vue";
 import PersonalVue from "@/modulos/personal/vistas/PersonalVue.vue";
 import PersonalEditarVue from "@/modulos/personal/vistas/PersonalEditarVue.vue";
@@ -28,6 +29,12 @@ const router = createRouter({
       name: "articulosagregar",
       component: ArticulosAgregarVue,
     },
+    {
+      path: "/articulos/:id/borrar",
+      name: "articulosborrar",
+      component: ArticulosBorrarVue,
+    },
+
     {
       path: "/personal",
       name: "personal",
