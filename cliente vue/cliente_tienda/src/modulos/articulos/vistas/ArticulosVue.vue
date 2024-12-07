@@ -29,7 +29,7 @@
                 <td class="text-primary">{{ articulos.descripcion }}</td>
                 <td class="text-primary">{{ articulos.precio }}</td>     
                 <td class="text-primary">{{ articulos.cantidadEnAlmacen }}</td>
-                <td class="text-primary">{{ articulos.fechaCaducidad }}</td>
+                <td class="text-primary">{{ articulos.fechaCaducidad.substring(0,10) }}</td>
                 <td classname="dsato" class="centrado">
                     <div class="btn-group" role="group" aria-label="Basic outlined example">
                         <button type="button" class="btn btn-sm btn-outline-primary">
