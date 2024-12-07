@@ -1,4 +1,6 @@
 import ClientesVue from "@/modulos/clientes/vistas/ClientesVue.vue";
+import ClientesAgregarVue from "@/modulos/clientes/vistas/ClientesAgregarVue.vue";
+
 
 import ArticulosVue from "@/modulos/articulos/vistas/ArticulosVue.vue";
 import ArticulosAgregarVue from "@/modulos/articulos/vistas/ArticulosAgregarVue.vue";
@@ -26,6 +28,11 @@ const router = createRouter({
       path: "/clientes",
       name: "clientes",
       component: ClientesVue,
+    },
+    {
+      path: "/clientes/agregar",
+      name: "clientesagregar",
+      component: ClientesAgregarVue,
     },
     {
       path: "/articulos",

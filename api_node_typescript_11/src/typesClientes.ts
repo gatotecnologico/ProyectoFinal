@@ -2,7 +2,7 @@ export interface Cliente {
     id: number,
     nombre: string,
     direccion: string,
-    telefono: bigint,
+    telefono: string,
     correo: string,
     ciudad: string
 }
