@@ -5,6 +5,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import PersonalBorrarVue from "@/modulos/personal/vistas/PersonalBorrarVue.vue";
 import ComprasAgregarVue from "@/modulos/compras/vistas/ComprasAgregarVue.vue";
 import ComprasVue from "@/modulos/compras/vistas/ComprasVue.vue";
+import VentasAgregarVue from "@/modulos/ventas/vistas/VentasAgregarVue.vue";
+import VentasVue from "@/modulos/ventas/vistas/VentasVue.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -43,6 +45,16 @@ const router = createRouter({
       path: "/compras/agregar",
       name: "comprasagregar",
       component: ComprasAgregarVue,
+    },
+    {
+      path: "/ventas",
+      name: "ventas",
+      component: VentasVue,
+    },
+    {
+      path: "/ventas/agregar",
+      name: "ventasagregar",
+      component: VentasAgregarVue,
     },
   ],
 });
