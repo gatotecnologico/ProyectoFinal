@@ -2,8 +2,8 @@ export interface Articulo {
     id: number,
     descripcion: string,
     precio: number,
-    cantidad: number,
-    caducidad: string
+    cantidadEnAlmacen: number,
+    fechaCaducidad: string
 }
 
 export type ArticuloNuevo = Omit<Articulo,'id'>

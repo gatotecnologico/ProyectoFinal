@@ -24,18 +24,17 @@ export const agregarArticulo = async (nuevo:ArticuloNuevo) => {
     try {
         const validacion = articulosSchema.safeParse({
             descripcion: nuevo.descripcion,
-            precio: nuevo.precio,
-            cantidad: nuevo.cantidad,
-            caducidad: new Date(nuevo.caducidad)
+            precio: Number(nuevo.precio),
+            cantidadEnAlmacen: Number(nuevo.cantidadEnAlmacen),
+            fechaCaducidad: new Date(nuevo.fechaCaducidad)
         })
         if (!validacion.success) {
-            console.log(validacion.error)
             return {error: validacion.error}
         }
-        const [results] = await conexion.query('INSERT INTO articulos(descripcion, precio, `cantidad en almacen`, `fecha de caducidad`) VALUES(?, ?, ?, ?)', [nuevo.descripcion, nuevo.precio, nuevo.cantidad, nuevo.caducidad])
+        const [results] = await conexion.query('INSERT INTO articulos(descripcion, precio, cantidadEnAlmacen, fechaCaducidad) VALUES(?, ?, ?, ?)', 
+            [nuevo.descripcion, nuevo.precio, nuevo.cantidadEnAlmacen, nuevo.fechaCaducidad])
         return results
     } catch (error) {
-        console.log(error)
         return {error: "No se puede agregar el articulo"}
     }
 }
@@ -44,18 +43,17 @@ export const modificarArticulo = async (modificado:Articulo) => {
     try {
         const validacion = articulosSchema.safeParse({
             descripcion: modificado.descripcion,
-            precio: modificado.precio,
-            cantidad: modificado.cantidad,
-            caducidad: new Date(modificado.caducidad)
+            precio: Number(modificado.precio),
+            cantidadEnAlmacen: Number(modificado.cantidadEnAlmacen),
+            fechaCaducidad: new Date(modificado.fechaCaducidad)
         })
         if (!validacion.success) {
             return {error: validacion.error}
         }
-        const [results] = await conexion.query('UPDATE articulos SET descripcion = ?, precio = ?, `cantidad en almacen` = ?, `fecha de caducidad` = ? WHERE id = ?', 
-            [modificado.descripcion, modificado.precio, modificado.cantidad, modificado.caducidad, modificado.id])
+        const [results] = await conexion.query('UPDATE articulos SET descripcion = ?, precio = ?, cantidadEnAlmacen = ?, fechaCaducidad = ? WHERE id = ?', 
+            [modificado.descripcion, modificado.precio, modificado.cantidadEnAlmacen, modificado.fechaCaducidad, modificado.id])
         return results
     } catch (error) {
-        console.log(error)
         return {error: "No se puede modificar"}
     }
 }

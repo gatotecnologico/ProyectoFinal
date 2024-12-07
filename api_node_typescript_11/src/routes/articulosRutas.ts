@@ -16,16 +16,16 @@ router.get('/:id', async (req:Request, res:Response) => {
 
 router.post('/', async (req:Request, res:Response) => {
     try {
-        console.log(req.body)
-        const {descripcion, precio, cantidad, caducidad} = req.body
+        const {descripcion, precio, cantidadEnAlmacen, fechaCaducidad} = req.body
         const nuevo = await articulosServices.agregarArticulo({
             descripcion,
             precio, 
-            cantidad, 
-            caducidad
+            cantidadEnAlmacen, 
+            fechaCaducidad
         })
         res.send(nuevo)
     } catch (error) {
+        console.log(error)
         res.send('No se puede agregar el articulo')
         res.status(400).send('Error en los datos')
     }
@@ -34,13 +34,13 @@ router.post('/', async (req:Request, res:Response) => {
 //http://localhost:3001/api/articulos/id/
 router.put('/', async (req:Request, res:Response) => {
     try {
-        const {id, descripcion, precio, cantidad, caducidad} = req.body
+        const {id, descripcion, precio, cantidadEnAlmacen, fechaCaducidad} = req.body
         const modificado = await articulosServices.modificarArticulo({
             id,
             descripcion, 
             precio, 
-            cantidad, 
-            caducidad
+            cantidadEnAlmacen, 
+            fechaCaducidad
         })
         res.send(modificado)
     } catch (error) {
