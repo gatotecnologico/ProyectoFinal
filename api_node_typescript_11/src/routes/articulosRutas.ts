@@ -48,6 +48,41 @@ router.put('/', async (req:Request, res:Response) => {
     }
 })
 
+router.put("/compra", async (req: Request, res: Response) => {
+    try {
+      const {id, descripcion, precio, cantidadEnAlmacen, fechaCaducidad} = req.body
+      const articulo = await articulosServices.modificarCantidad({
+        id,
+        descripcion,
+        precio,
+        cantidadEnAlmacen,
+        fechaCaducidad
+      }, "compra")
+        res.send(articulo)
+    } catch (error) {
+      res.send("No se puede modificar la cantidad en almacen");
+      res.status(400).send("Error en los datos");
+    }
+});    
+
+router.put("/venta", async (req: Request, res: Response) => {
+    try {
+      const {id, descripcion, precio, cantidadEnAlmacen, fechaCaducidad} = req.body
+      const articulo = await articulosServices.modificarCantidad({
+        id,
+        descripcion,
+        precio,
+        cantidadEnAlmacen,
+        fechaCaducidad
+      }, "venta")
+      res.send(articulo)
+    } catch (error) {
+      console.log(error)
+      res.send("No se puede modificar la cantidad en almacen");
+      res.status(400).send("Error en los datos");
+    }
+});    
+
 //http://localhost:3001/api/articulos/
 router.delete('/', async (req:Request, res:Response) => {
     try {

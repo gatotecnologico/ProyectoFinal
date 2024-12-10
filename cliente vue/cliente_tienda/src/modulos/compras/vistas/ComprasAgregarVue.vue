@@ -111,8 +111,9 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 import type { CompraNueva } from "../interfaces/compras-interface";
+import type { Articulo } from "../../articulos/interfaces/articulos-interfaces";
 import useCompras from "../controladores/useCompras";
-const { agregarCompra, mensaje } = useCompras();
+const { agregarCompra, mensaje, modificarCantidad } = useCompras();
 import { CompraSchema } from "../schemas/ComprasSchema";
 import { Field, Form, ErrorMessage } from "vee-validate";
 let compra = ref<CompraNueva>({
@@ -128,6 +129,14 @@ let compra = ref<CompraNueva>({
 const onTodoBien = async () => {
     try {
         const resultado = await agregarCompra(compra.value);
+        let articulo = ref<Articulo>({
+            id: compra.value.idArticulo,
+            descripcion: "......",
+            precio: 1000,
+            cantidadEnAlmacen: compra.value.cantidad,
+            fechaCaducidad: "2024-01-01"
+        })
+        const resultado2 = await modificarCantidad(articulo.value);
     } catch (error) {
         console.error("Error en onTodoBien:", error);
     }

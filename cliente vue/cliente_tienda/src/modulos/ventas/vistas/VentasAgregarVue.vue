@@ -123,11 +123,12 @@
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
-import type { VentaNueva } from "../interfaces/ventas-interfaces";
+import type { VentaNueva } from "../interfaces/ventas-interface";
 import useVentas from "../controladores/useVentas";
-const { agregarVenta, mensaje } = useVentas();
+const { agregarVenta, mensaje, modificarCantidad } = useVentas();
 import { VentaSchema } from "../schemas/VentaSchema";
 import { Field, Form, ErrorMessage } from "vee-validate";
+import type { Articulo } from "../../articulos/interfaces/articulos-interfaces";
 let venta = ref<VentaNueva>({
     idArticulo: 0,
     idCliente: 0,
@@ -142,6 +143,14 @@ let venta = ref<VentaNueva>({
 const onTodoBien = async () => {
     try {
         const resultado = await agregarVenta(venta.value);
+        let articulo = ref<Articulo>({
+            id: venta.value.idArticulo,
+            descripcion: "......",
+            precio: 1000,
+            cantidadEnAlmacen: venta.value.cantidad,
+            fechaCaducidad: "2024-01-01"
+        })
+        const resultado2 = await modificarCantidad(articulo.value);
     } catch (error) {
         console.error("Error en onTodoBien:", error);
     }

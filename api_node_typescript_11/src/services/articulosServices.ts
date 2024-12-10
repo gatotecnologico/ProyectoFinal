@@ -66,3 +66,29 @@ export const borrarArticulo = async (id:number) => {
         return {error: "No se puede borrar el articulo"}
     }
 }
+
+export const modificarCantidad = async (modificado:Articulo, modificacion:String) => {
+    try {
+        const validacion = articulosSchema.safeParse({
+            descripcion: modificado.descripcion,
+            precio: Number(modificado.precio),
+            cantidadEnAlmacen: Number(modificado.cantidadEnAlmacen),
+            fechaCaducidad: new Date(modificado.fechaCaducidad)
+        })
+        if (!validacion.success) {
+            return {error: validacion.error}
+        }
+        let [results] = await conexion.query('SELECT * FROM articulos')
+        if (modificacion.includes('compra')) {
+            [results] = await conexion.query('UPDATE articulos SET cantidadEnAlmacen = cantidadEnAlmacen + ? WHERE id = ?', 
+                [modificado.cantidadEnAlmacen, modificado.id])
+        }
+        if (modificacion.includes('venta')) {
+            [results] = await conexion.query('UPDATE articulos SET cantidadEnAlmacen = cantidadEnAlmacen - ? WHERE id = ?', 
+                [modificado.cantidadEnAlmacen, modificado.id])
+        }
+        return results
+    } catch (error) {
+        return {error: "No se puede modificar"}
+    }
+}

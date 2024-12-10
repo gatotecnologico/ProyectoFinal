@@ -51,6 +51,7 @@ export const agregarVenta = async (nuevo: VentaNueva) => {
         nuevo.fechaVenta,
       ],
     );
+    
     return results;
   } catch (error) {
     return { error: "No se puede agregar la venta" };

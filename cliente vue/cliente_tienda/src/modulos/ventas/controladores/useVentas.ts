@@ -1,6 +1,8 @@
 import { ref } from "vue";
 import type { Venta, VentaNueva } from "../interfaces/ventas-interface";
 import ventasAPI from "../api/ventasAPI";
+import articulosAPI from "../../articulos/api/articulosAPI";
+import type { Articulo } from "../../articulos/interfaces/articulos-interfaces";
 
 export const useCompras = () => {
   let venta = ref<Venta[]>([]);
@@ -23,12 +25,20 @@ export const useCompras = () => {
     }
   };
 
+  const modificarCantidad = async (modificado: Articulo) => {
+    const respuesta = await articulosAPI.put("/venta", modificado);
+    if (respuesta.data.affectedRows >= 1) {
+      mensaje.value = 1;
+    }
+  }
+
   return {
     venta,
     mensaje,
     traeVentas,
     traeVentaId,
     agregarVenta,
+    modificarCantidad
   };
 };
 

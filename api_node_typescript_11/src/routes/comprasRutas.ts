@@ -17,7 +17,7 @@ router.get("/:id", async (req: Request, res: Response) => {
 //http://localhost:3001/api/compras
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { idArticulo, cantidad, precio, IVA, subtotal, total, fechaCompra } =
+    let { idArticulo, cantidad, precio, IVA, subtotal, total, fechaCompra } =
       req.body;
     const nuevo = await comprasServices.agregarCompra({
       id_articulo: idArticulo,
@@ -28,12 +28,14 @@ router.post("/", async (req: Request, res: Response) => {
       total,
       fechaCompra,
     });
+    
     res.send(nuevo);
   } catch (error) {
     res.send("No se puede agregar la compra");
     res.status(400).send("Error en los datos");
   }
 });
+
 
 //http://localhost:3001/api/compras/id/
 router.put("/", async (req: Request, res: Response) => {

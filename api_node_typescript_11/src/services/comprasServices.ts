@@ -49,6 +49,7 @@ export const agregarCompra = async (nuevo: CompraNueva) => {
         nuevo.fechaCompra,
       ],
     );
+    
     return results;
   } catch (error) {
     console.log(error);
