@@ -20,7 +20,7 @@ export const encuentraCliente = async (id:number) => {
     }
 } 
  
-// export const encuentraPersonalTelefono = async (telefono:string) => {
+// export const encuentraCorreoClientes = async (telefono:string) => {
 //     try {
 //         const [results] = await conexion.query('SELECT * FROM personal WHERE telefono=? AND estatus=1', telefono)
 //         return results

@@ -10,9 +10,28 @@
             <div class="card-body ">
                 <Form :validation-schema="registroSchema">
                     <div class="mb-3 text-primary">
-                        Clave Personal
-                        <Field name="idPersonal" type="number" class="form-control" v-model="registro.idPersonal"/>
-                        <ErrorMessage name="idPersonal" class="errorValidacion"/>
+                        Personal
+                        <Field
+                            name="idPersonal"
+                            as="select"
+                            class="form-select"
+                            v-model="registro.idPersonal"
+                        >
+                            <option value="">Seleccione a un personal</option>
+                            <option
+                                v-for="persona in personal"
+                                :key="persona.id"
+                                :value="persona.nombre"
+                            >
+                                Id: {{ persona.id }} - Nombre: {{
+                                    persona.nombre
+                                }}
+                            </option>
+                        </Field>
+                        <ErrorMessage
+                            name="idArticulo"
+                            class="errorValidacion"
+                        />
                     </div>
                     <div class="mb-3 text-primary">
                         Fecha
@@ -44,7 +63,11 @@
 import { ref } from 'vue';
 import type { RegistroNuevo } from '../interfaces/registro-interface';
 import useRegistro from '../controladores/useRegistro';
+import usePersonal from '../../personal/controladores/usePersonal';
+
 const { agregarRegistro, mensaje } = useRegistro()
+import { onMounted } from 'vue';
+const { personal, traePersonal } = usePersonal()
 import { registroSchema } from '../schemas/RegistroSchema';
 import { Field, Form, ErrorMessage } from 'vee-validate'
     let registro = ref<RegistroNuevo>({
@@ -52,6 +75,10 @@ import { Field, Form, ErrorMessage } from 'vee-validate'
         fecha: "",
         hora: "",
         movimiento: ""
+    })
+
+    onMounted(async() => {
+    await traePersonal()
     })
 
     const onTodoBien = async () => {
