@@ -11,10 +11,18 @@ export const useRegistro = () => {
         registro.value = respuesta.data
     }
 
+    const agregarRegistro = async (registro:RegistroNuevo) => {
+        const respuesta = await registroAPI.post('/',registro)
+        if(respuesta.data.affectedRows >= 1) {
+            mensaje.value = 1
+        }
+    }
+
     return {
         registro,
         mensaje,
         traeRegistro,
+        agregarRegistro
     }
 }
 
