@@ -23,16 +23,17 @@ export const encuentraRegistro = async (id:number) => {
 export const agregarRegistro = async (nuevo:RegistroNuevo) => {
     try {
         const validacion = registroSchema.safeParse({
-            id_personal: nuevo.id_personal,
+            idPersonal: nuevo.idPersonal,
             fecha: new Date(nuevo.fecha),
             hora: nuevo.hora,
             movimiento: nuevo.movimiento
         })
         if (!validacion.success) {
+            console.log(validacion.error)
             return {error: validacion.error}
         }
         const [results] = await conexion.query('INSERT INTO registro(`idPersonal`,fecha, hora, movimiento) VALUES(?, ?, ?, ?)', 
-            [nuevo.id_personal, nuevo.fecha, nuevo.hora, nuevo.movimiento])
+            [nuevo.idPersonal, nuevo.fecha, nuevo.hora, nuevo.movimiento])
         return results
     } catch (error) {
         console.log(error)
@@ -43,8 +44,8 @@ export const agregarRegistro = async (nuevo:RegistroNuevo) => {
 export const modificarRegistro = async (modificado:Registro) => {
     try {
         const validacion = registroSchema.safeParse({
-            id_personal: modificado.id_personal,
-            fecha: new Date(modificado.fecha),
+            idPersonal: modificado.idPersonal,
+            fecha: modificado.fecha,
             hora: modificado.hora,
             movimiento: modificado.movimiento
         })
@@ -52,7 +53,7 @@ export const modificarRegistro = async (modificado:Registro) => {
             return {error: validacion.error}
         }
         const [results] = await conexion.query('UPDATE registro SET `idPersonal` = ?, fecha = ?, hora = ?, movimiento = ? WHERE id = ?', 
-            [modificado.id_personal, modificado.fecha, modificado.hora, modificado.movimiento, modificado.id])
+            [modificado.idPersonal, modificado.fecha, modificado.hora, modificado.movimiento, modificado.id])
         return results
     } catch (error) {
         return {error: `No se puede modificar el registro ${modificado.id}`}

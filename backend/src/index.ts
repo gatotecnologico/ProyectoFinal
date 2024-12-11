@@ -11,6 +11,7 @@ import clientesRutas from './routes/clientesRutas';
 import articulosRutas from './routes/articulosRutas';
 import ventasRutas from './routes/ventasRutas';
 import comprasRutas from './routes/comprasRutas'
+import registroRutas from './routes/registroRutas'
 
 //Puerto para escuchar la peticion del frontend
 const PUERTO = 3001
@@ -20,6 +21,7 @@ app.use('/api/clientes', clientesRutas)
 app.use('/api/articulos', articulosRutas)
 app.use('/api/ventas', ventasRutas)
 app.use('/api/compras', comprasRutas)
+app.use('/api/registro', registroRutas)
 
 //Ruta
 // app.get('/hola', (_req, res) => {

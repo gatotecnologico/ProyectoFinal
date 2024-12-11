@@ -16,16 +16,16 @@ router.get('/:id', async (req:Request, res:Response) => {
 
 router.post('/', async (req:Request, res:Response) => {
     try {
-        console.log(req.body)
-        const {id_personal, fecha, hora, movimiento} = req.body
+        const {idPersonal, fecha, hora, movimiento} = req.body
         const nuevo = await registroServices.agregarRegistro({
-            id_personal,
+            idPersonal,
             fecha,
             hora,
             movimiento
         })
         res.send(nuevo)
     } catch (error) {
+        console.log(error)
         res.send('No se puede agregar el registro')
         res.status(400).send('Error en los datos')
     }
@@ -34,10 +34,10 @@ router.post('/', async (req:Request, res:Response) => {
 //http://localhost:3001/api/registro/id/
 router.put('/', async (req:Request, res:Response) => {
     try {
-        const {id, id_personal, fecha, hora, movimiento} = req.body
+        const {id, idPersonal, fecha, hora, movimiento} = req.body
         const modificado = await registroServices.modificarRegistro({
             id,
-            id_personal,
+            idPersonal,
             fecha,
             hora,
             movimiento

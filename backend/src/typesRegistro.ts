@@ -1,6 +1,6 @@
 export interface Registro {
     id: number,
-    id_personal: number,
+    idPersonal: number,
     fecha: string,
     hora: string,
     movimiento: string
