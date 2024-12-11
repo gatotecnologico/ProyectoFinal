@@ -5,7 +5,7 @@ export const registroSchema = z.object({
     fecha: z.date(),
     hora: z.string().min(5).max(5),
     movimiento: z.string()
-}).refine( data => data.movimiento === "entrada" || "salida", {
+}).refine( data => data.movimiento.includes!("entrada") || data.movimiento.includes!("salida"), {
         message: `El movimiento solo puede ser "entrada" o "salida"`, 
         path:["movimiento"]
     }

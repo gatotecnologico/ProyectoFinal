@@ -15,6 +15,7 @@ import ComprasAgregarVue from "@/modulos/compras/vistas/ComprasAgregarVue.vue";
 import ComprasVue from "@/modulos/compras/vistas/ComprasVue.vue";
 import VentasAgregarVue from "@/modulos/ventas/vistas/VentasAgregarVue.vue";
 import VentasVue from "@/modulos/ventas/vistas/VentasVue.vue";
+import RegistroVue from "@/modulos/registro/vistas/RegistroVue.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -104,6 +105,11 @@ const router = createRouter({
       path: "/ventas/agregar",
       name: "ventasagregar",
       component: VentasAgregarVue,
+    },
+    {
+      path: "/registro",
+      name: "registro",
+      component: RegistroVue,
     },
   ],
 });
