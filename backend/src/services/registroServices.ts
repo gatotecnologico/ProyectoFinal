@@ -31,7 +31,7 @@ export const agregarRegistro = async (nuevo:RegistroNuevo) => {
         if (!validacion.success) {
             return {error: validacion.error}
         }
-        const [results] = await conexion.query('INSERT INTO registro(`id personal`,fecha, hora, movimiento) VALUES(?, ?, ?, ?)', 
+        const [results] = await conexion.query('INSERT INTO registro(`idPersonal`,fecha, hora, movimiento) VALUES(?, ?, ?, ?)', 
             [nuevo.id_personal, nuevo.fecha, nuevo.hora, nuevo.movimiento])
         return results
     } catch (error) {
@@ -51,7 +51,7 @@ export const modificarRegistro = async (modificado:Registro) => {
         if (!validacion.success) {
             return {error: validacion.error}
         }
-        const [results] = await conexion.query('UPDATE registro SET `id personal` = ?, fecha = ?, hora = ?, movimiento = ? WHERE id = ?', 
+        const [results] = await conexion.query('UPDATE registro SET `idPersonal` = ?, fecha = ?, hora = ?, movimiento = ? WHERE id = ?', 
             [modificado.id_personal, modificado.fecha, modificado.hora, modificado.movimiento, modificado.id])
         return results
     } catch (error) {
