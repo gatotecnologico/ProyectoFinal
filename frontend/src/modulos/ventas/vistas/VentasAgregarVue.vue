@@ -14,26 +14,47 @@
             <div class="card-body">
                 <Form :validation-schema="VentaSchema" @submit="onTodoBien">
                     <div class="mb-3 text-primary">
-                        ID Artículo
+                        Artículo
                         <Field
                             name="idArticulo"
-                            type="number"
-                            class="form-control"
+                            as="select"
+                            class="form-select"
                             v-model="venta.idArticulo"
-                        />
+                        >
+                            <option value="">Seleccione un artículo</option>
+                            <option
+                                v-for="articulo in articulos"
+                                :key="articulo.id"
+                                :value="articulo.id"
+                            >
+                                {{ articulo.descripcion }} - ${{
+                                    articulo.precio
+                                }}
+                            </option>
+                        </Field>
                         <ErrorMessage
                             name="idArticulo"
                             class="errorValidacion"
                         />
                     </div>
+
                     <div class="mb-3 text-primary">
-                        ID cliente
+                        Cliente
                         <Field
                             name="idCliente"
-                            type="number"
-                            class="form-control"
+                            as="select"
+                            class="form-select"
                             v-model="venta.idCliente"
-                        />
+                        >
+                            <option value="">Seleccione un cliente</option>
+                            <option
+                                v-for="cliente in clientes"
+                                :key="cliente.id"
+                                :value="cliente.id"
+                            >
+                                {{ cliente.nombre }} - {{ cliente.correo }}
+                            </option>
+                        </Field>
                         <ErrorMessage
                             name="idCliente"
                             class="errorValidacion"
@@ -126,9 +147,21 @@ import { ref, watch } from "vue";
 import type { VentaNueva } from "../interfaces/ventas-interface";
 import useVentas from "../controladores/useVentas";
 const { agregarVenta, mensaje, modificarCantidad } = useVentas();
+import useArticulos from "../../articulos/controladores/useArticulos";
+const { articulos, traeArticulos } = useArticulos();
+import useClientes from "../../clientes/controladores/useClientes";
+const { clientes, traeClientes } = useClientes();
+
 import { VentaSchema } from "../schemas/VentaSchema";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import type { Articulo } from "../../articulos/interfaces/articulos-interfaces";
+import { onMounted } from "vue";
+const clientesM = [];
+onMounted(async () => {
+    await traeArticulos();
+    await traeClientes();
+});
+
 let venta = ref<VentaNueva>({
     idArticulo: 0,
     idCliente: 0,
@@ -148,8 +181,8 @@ const onTodoBien = async () => {
             descripcion: "......",
             precio: 1000,
             cantidadEnAlmacen: venta.value.cantidad,
-            fechaCaducidad: "2024-01-01"
-        })
+            fechaCaducidad: "2024-01-01",
+        });
         const resultado2 = await modificarCantidad(articulo.value);
     } catch (error) {
         console.error("Error en onTodoBien:", error);
@@ -157,10 +190,18 @@ const onTodoBien = async () => {
 };
 
 watch(
-    [() => venta.value.cantidad, () => venta.value.precio],
-    ([newCantidad, newPrecio]) => {
+    [() => venta.value.cantidad, () => venta.value.idArticulo],
+    async ([newCantidad, newIdArticulo]) => {
+        const articuloSeleccionado = articulos.value.find(
+            (articulo) => articulo.id === newIdArticulo,
+        );
+        if (articuloSeleccionado) {
+            venta.value.precio = articuloSeleccionado.precio;
+        }
         // Calculamos el subtotal
-        venta.value.subtotal = Number((newCantidad * newPrecio).toFixed(2));
+        venta.value.subtotal = Number(
+            (newCantidad * venta.value.precio).toFixed(2),
+        );
 
         // Calculamos el monto del IVA
         const montoIVA = Number(

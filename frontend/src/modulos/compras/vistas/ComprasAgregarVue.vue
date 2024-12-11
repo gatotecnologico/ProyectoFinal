@@ -14,13 +14,24 @@
             <div class="card-body">
                 <Form :validation-schema="CompraSchema" @submit="onTodoBien">
                     <div class="mb-3 text-primary">
-                        ID Artículo
+                        Artículo
                         <Field
                             name="idArticulo"
-                            type="number"
-                            class="form-control"
+                            as="select"
+                            class="form-select"
                             v-model="compra.idArticulo"
-                        />
+                        >
+                            <option value="">Seleccione un artículo</option>
+                            <option
+                                v-for="articulo in articulos"
+                                :key="articulo.id"
+                                :value="articulo.id"
+                            >
+                                {{ articulo.descripcion }} - ${{
+                                    articulo.precio
+                                }}
+                            </option>
+                        </Field>
                         <ErrorMessage
                             name="idArticulo"
                             class="errorValidacion"
@@ -114,6 +125,10 @@ import type { CompraNueva } from "../interfaces/compras-interface";
 import type { Articulo } from "../../articulos/interfaces/articulos-interfaces";
 import useCompras from "../controladores/useCompras";
 const { agregarCompra, mensaje, modificarCantidad } = useCompras();
+import useArticulos from "../../articulos/controladores/useArticulos";
+const { articulos, traeArticulos } = useArticulos();
+import { onMounted } from "vue";
+
 import { CompraSchema } from "../schemas/ComprasSchema";
 import { Field, Form, ErrorMessage } from "vee-validate";
 let compra = ref<CompraNueva>({
@@ -125,6 +140,9 @@ let compra = ref<CompraNueva>({
     total: 0,
     fechaCompra: new Date().toISOString().slice(0, 10),
 });
+onMounted(async () => {
+    await traeArticulos();
+});
 
 const onTodoBien = async () => {
     try {
@@ -134,8 +152,8 @@ const onTodoBien = async () => {
             descripcion: "......",
             precio: 1000,
             cantidadEnAlmacen: compra.value.cantidad,
-            fechaCaducidad: "2024-01-01"
-        })
+            fechaCaducidad: "2024-01-01",
+        });
         const resultado2 = await modificarCantidad(articulo.value);
     } catch (error) {
         console.error("Error en onTodoBien:", error);
@@ -143,8 +161,15 @@ const onTodoBien = async () => {
 };
 
 watch(
-    [() => compra.value.cantidad, () => compra.value.precio],
-    ([newCantidad, newPrecio]) => {
+    [() => compra.value.cantidad, () => compra.value.idArticulo],
+    ([newCantidad, newidArticulo]) => {
+        const articuloSeleccionado = articulos.value.find(
+            (art) => art.id === newidArticulo,
+        );
+        const newPrecio = articuloSeleccionado
+            ? articuloSeleccionado.precio
+            : 0;
+        compra.value.precio = newPrecio;
         // Calculamos el subtotal
         compra.value.subtotal = Number((newCantidad * newPrecio).toFixed(2));
 
